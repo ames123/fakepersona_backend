@@ -16,7 +16,7 @@ public enum Action {
 
     public final String label;
 
-    private Action(String label) {
+    Action(String label) {
         this.label = label;
     }
 

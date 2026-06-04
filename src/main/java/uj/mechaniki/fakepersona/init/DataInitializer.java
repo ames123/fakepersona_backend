@@ -1,6 +1,7 @@
 package uj.mechaniki.fakepersona.init;
 
 import lombok.AllArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import uj.mechaniki.fakepersona.model.Action;
@@ -14,7 +15,7 @@ public class DataInitializer implements CommandLineRunner {
     private final RoleRepository roleRepository;
 
     @Override
-    public void run(String... args) {
+    public void run(String @NonNull ... args) {
         Role role1 = Role.builder()
                 .name("Sportowiec")
                 .roleAction1(Action.EAT)

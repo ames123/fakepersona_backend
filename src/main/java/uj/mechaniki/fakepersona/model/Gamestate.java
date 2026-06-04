@@ -11,7 +11,7 @@ public enum Gamestate {
 
     public final String label;
 
-    private Gamestate(String label) {
+    Gamestate(String label) {
         this.label = label;
     }
 
