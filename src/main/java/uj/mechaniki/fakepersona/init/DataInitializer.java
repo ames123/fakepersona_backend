@@ -103,6 +103,10 @@ public class DataInitializer implements CommandLineRunner {
         roleRepository.save(role4);
         roleRepository.save(role5);
         roleRepository.save(role6);
+        roleRepository.save(role7);
+        roleRepository.save(role8);
+        roleRepository.save(role9);
+        roleRepository.save(role10);
 
         System.out.println("Data initialized");
     }
