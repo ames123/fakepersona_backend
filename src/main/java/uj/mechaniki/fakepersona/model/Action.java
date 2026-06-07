@@ -1,17 +1,27 @@
 package uj.mechaniki.fakepersona.model;
 
 public enum Action {
-    FREE_TIME("FREE_TIME"),
-    READ("READ"),
-    CLEAN("CLEAN"),
-    TV("TV"),
-    COOK("COOK"),
-    GARDEN("GARDEN"),
-    SPORT("SPORT"),
-    WRITE("WRITE"),
-    EAT("EAT"),
-    WASH("WASH"),
-    SLEEP("SLEEP"),
+    FREE_TIME("Czas wolny"),
+    READ("Czytanie"),
+    CLEAN("Ścieranie kurzu"),
+    TV("Oglądanie"),
+    COOK("Gotowanie"),
+    GARDEN("Pielęgnacja roślin"),
+    SPORT("Sport"),
+    WRITE("Pisanie książki"),
+    EAT("Jedzenie"),
+    WASH("Mycie"),
+    SLEEP("Odpoczynek"),
+    TRAINING("Trening"),
+    STOCK("Szukanie zapasów"),
+    CHANGE("Przebieranie się"),
+    DISINFECT("Dezynfekcja"),
+    MUSIC("Słuchanie muzyki"),
+    ACT("Próba roli"),
+    STEAL("Kradzież"),
+    CHECKUP("Badanie lekarskie"),
+    GAME("Granie na PC"),
+    EXPERIMENT("Eksperyment")
     ;
 
     public final String label;
