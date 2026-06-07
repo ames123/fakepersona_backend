@@ -22,7 +22,9 @@ public class RoomController {
     private final RoleRepository roleRepository;
 
     @PostMapping("/rooms")
+    @CrossOrigin
     public ResponseEntity<Room> createRoom(@RequestParam String displayName){
+        System.out.println("POST /rooms");
         Persona player = Persona.builder()
                 .displayName(displayName)
                 .build();
@@ -46,25 +48,33 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
+    @CrossOrigin
     public ResponseEntity<List<Room>> getRooms(){
+        System.out.println("GET /rooms");
         return ResponseEntity.ok(roomRepository.findAll());
     }
 
     @GetMapping("/rooms/{code}")
+    @CrossOrigin
     public ResponseEntity<Room> getRoom(@PathVariable String code){
+        System.out.println("GET /rooms/" + code);
         return ResponseEntity.ok(roomRepository.getRoomByRoomCode(code));
     }
 
     @GetMapping("/rooms/{code}/gamestate")
+    @CrossOrigin
     public ResponseEntity<Gamestate> getGamestate(@PathVariable String code) {
+        System.out.println("GET /rooms/"+ code + "/gamestate");
         Room room = roomRepository.getRoomByRoomCode(code);
         return ResponseEntity.ok(room.getGamestate());
     }
 
     @PostMapping("/rooms/{code}")
     @Transactional
+    @CrossOrigin
     public ResponseEntity<Room> joinRoom(@PathVariable String code,
                                          @RequestParam String displayName){
+        System.out.println("POST /rooms/" + code);
         Room room = roomRepository.getRoomByRoomCode(code);
 
         if(room.getPlayerCount() >= 6) return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -86,7 +96,9 @@ public class RoomController {
     }
 
     @PostMapping("/rooms/{code}/action/start")
+    @CrossOrigin
     public ResponseEntity<Room> startGame(@PathVariable String code){
+        System.out.println("POST /rooms/" + code + "/action/start");
         Room room = roomRepository.getRoomByRoomCode(code);
 
         List<Role> roles = roleRepository.findAll();
@@ -99,13 +111,15 @@ public class RoomController {
             p.setRole(givenRole);
         }
 
-        room.setGamestate(Gamestate.FREE_TIME_SELECT);
+        room.setGamestate(Gamestate.ORDERING);
         Room changedRoom = roomRepository.save(room);
         return ResponseEntity.ok(changedRoom);
     }
 
     @GetMapping("/rooms/{code}/action/freetime")
+    @CrossOrigin
     public ResponseEntity<List<Action>> freeTimeOffer(@PathVariable String code){
+        System.out.println("GET /rooms/" + code + "/action/freetime");
         List<Action> actions = Arrays.asList(Action.values());
         Collections.shuffle(actions);
         return ResponseEntity.ok(actions.subList(1,4));
@@ -113,9 +127,11 @@ public class RoomController {
 
     @PostMapping("/rooms/{code}/action/freetime")
     @Transactional
+    @CrossOrigin
     public ResponseEntity<Room> freeTimeSelect(@PathVariable String code,
                                                @RequestParam String displayName,
                                                @RequestParam String actionName){
+        System.out.println("POST /rooms/" + code + "/action/freetime");
         Room room = roomRepository.getRoomByRoomCode(code);
         int freeTimeReadyCount = 0;
         for(Persona p: room.getPlayers()){
@@ -128,14 +144,13 @@ public class RoomController {
                 if(p.isFreeTimeReady()) freeTimeReadyCount+=1;
             }
         }
-        if(freeTimeReadyCount == room.getPlayerCount())
-            room.setGamestate(Gamestate.TASK_ORDERING);
         Room changedRoom = roomRepository.save(room);
         return ResponseEntity.ok(changedRoom);
     }
 
     @PostMapping("/rooms/{code}/action/tasks")
     @Transactional
+    @CrossOrigin
     public ResponseEntity<Room> orderTasks(@PathVariable String code,
                                            @RequestParam String displayName,
                                            @RequestParam String action1,
@@ -143,6 +158,7 @@ public class RoomController {
                                            @RequestParam String action3,
                                            @RequestParam String action4,
                                            @RequestParam String action5){
+        System.out.println("POST /rooms/" + code + "/action/tasks");
         Room room = roomRepository.getRoomByRoomCode(code);
 
 
@@ -180,8 +196,10 @@ public class RoomController {
 
     @PostMapping("/rooms/{code}/action/position")
     @Transactional
+    @CrossOrigin
     public ResponseEntity<Room> positionPiece(@PathVariable String code,
                                               @RequestParam String displayName){
+        System.out.println("POST /rooms/" + code + "/action/position");
         Room room = roomRepository.getRoomByRoomCode(code);
         int positionReadyCount = 0;
         for(Persona p: room.getPlayers()) {
@@ -201,8 +219,10 @@ public class RoomController {
 
     @PostMapping("/rooms/{code}/action/endHour")
     @Transactional
+    @CrossOrigin
     public ResponseEntity<Room> endHour(@PathVariable String code,
                                        @RequestParam String displayName){
+        System.out.println("POST /rooms/" + code + "/action/endHour");
         Room room = roomRepository.getRoomByRoomCode(code);
         int hourEndedCount = 0;
         for(Persona p: room.getPlayers()) {
@@ -217,7 +237,7 @@ public class RoomController {
         if(hourEndedCount == room.getPlayerCount()){
             room.setTimeProgression(room.getTimeProgression()+1);
             if(room.getTimeProgression() >= 4){
-                room.setGamestate(Gamestate.TASK_ORDERING);
+                room.setGamestate(Gamestate.ORDERING);
                 for(Persona p: room.getPlayers()){
                     p.setOrderingReady(false);
                     p.setPositionReady(false);
@@ -238,9 +258,11 @@ public class RoomController {
     }
 
     @PostMapping("/rooms/{code}/action/guess")
+    @CrossOrigin
     public ResponseEntity<Boolean> makeGuess(@PathVariable String code,
                                              @RequestParam String displayName,
                                              @RequestBody Map<String,String> guess){
+        System.out.println("POST /rooms/" + code + "/action/guess");
         Room room = roomRepository.getRoomByRoomCode(code);
         int correctCount=0;
         for(String playerName: guess.keySet()){

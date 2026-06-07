@@ -115,16 +115,14 @@ public class DataInitializer implements CommandLineRunner {
 
         HashSet<Persona> testSet = new HashSet<>();
         Persona testPersona1 = Persona.builder()
-                .id(9999L)
-                .displayName("TestPersona1")
+                .displayName("Test Persona")
                 .freeTimeReady(false)
                 .orderingReady(false)
                 .positionReady(false)
                 .hourEnded(false)
                 .build();
         Persona testPersona2 = Persona.builder()
-                .id(9998L)
-                .displayName("TestPersona2")
+                .displayName("Pest Tersona")
                 .freeTimeReady(false)
                 .orderingReady(false)
                 .positionReady(false)
@@ -136,7 +134,6 @@ public class DataInitializer implements CommandLineRunner {
         testSet.add(testPersona2);
 
         Room testRoom = Room.builder()
-                .id(9999L)
                 .roomCode("TESTR")
                 .gamestate(Gamestate.JOIN)
                 .playerCount(2)

@@ -2,11 +2,10 @@ package uj.mechaniki.fakepersona.model;
 
 public enum Gamestate {
     JOIN("JOIN"),
-    TASK_ORDERING("TASK_ORDERING"),
+    ORDERING("ORDERING"),
     POSITION("POSITION"),
     DEDUCTION("DEDUCTION"),
     END("END"),
-    FREE_TIME_SELECT("FREE_TIME_SELECT"),
     ;
 
     public final String label;
