@@ -4,15 +4,20 @@ import lombok.AllArgsConstructor;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import uj.mechaniki.fakepersona.model.Action;
-import uj.mechaniki.fakepersona.model.Role;
+import uj.mechaniki.fakepersona.model.*;
+import uj.mechaniki.fakepersona.repository.PersonaRepository;
 import uj.mechaniki.fakepersona.repository.RoleRepository;
+import uj.mechaniki.fakepersona.repository.RoomRepository;
+
+import java.util.HashSet;
 
 @Component
 @AllArgsConstructor
 public class DataInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
+    private final RoomRepository roomRepository;
+    private final PersonaRepository personaRepository;
 
     @Override
     public void run(String @NonNull ... args) {
@@ -107,6 +112,39 @@ public class DataInitializer implements CommandLineRunner {
         roleRepository.save(role8);
         roleRepository.save(role9);
         roleRepository.save(role10);
+
+        HashSet<Persona> testSet = new HashSet<>();
+        Persona testPersona1 = Persona.builder()
+                .id(9999L)
+                .displayName("TestPersona1")
+                .freeTimeReady(false)
+                .orderingReady(false)
+                .positionReady(false)
+                .hourEnded(false)
+                .build();
+        Persona testPersona2 = Persona.builder()
+                .id(9998L)
+                .displayName("TestPersona2")
+                .freeTimeReady(false)
+                .orderingReady(false)
+                .positionReady(false)
+                .hourEnded(false)
+                .build();
+        personaRepository.save(testPersona1);
+        personaRepository.save(testPersona2);
+        testSet.add(testPersona1);
+        testSet.add(testPersona2);
+
+        Room testRoom = Room.builder()
+                .id(9999L)
+                .roomCode("TESTR")
+                .gamestate(Gamestate.JOIN)
+                .playerCount(2)
+                .dayProgression(0)
+                .timeProgression(0)
+                .players(testSet)
+                .build();
+        roomRepository.save(testRoom);
 
         System.out.println("Data initialized");
     }
