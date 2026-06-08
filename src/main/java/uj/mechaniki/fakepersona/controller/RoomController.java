@@ -167,13 +167,13 @@ public class RoomController {
         for(Persona p: room.getPlayers()){
             if(p.getDisplayName().equals(displayName)) {
                 int defaultTasklistSimilarity=0;
-                if(Action.valueOf(action1) == p.getRole().getRoleAction1()) defaultTasklistSimilarity+=1;
-                if(Action.valueOf(action2) == p.getRole().getRoleAction2()) defaultTasklistSimilarity+=1;
-                if(Action.valueOf(action3) == p.getRole().getRoleAction3()) defaultTasklistSimilarity+=1;
-                if(Action.valueOf(action4) == p.getRole().getRoleAction4()) defaultTasklistSimilarity+=1;
-                if(Action.valueOf(action5) == p.getRole().getRoleAction5()) defaultTasklistSimilarity+=1;
-                if(defaultTasklistSimilarity < room.getDayProgression())
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Error","Default tasklist similarity doesn't match day progression").build();
+                //if(Action.valueOf(action1) == p.getRole().getRoleAction1()) defaultTasklistSimilarity+=1;
+                //if(Action.valueOf(action2) == p.getRole().getRoleAction2()) defaultTasklistSimilarity+=1;
+                //if(Action.valueOf(action3) == p.getRole().getRoleAction3()) defaultTasklistSimilarity+=1;
+                //if(Action.valueOf(action4) == p.getRole().getRoleAction4()) defaultTasklistSimilarity+=1;
+                //if(Action.valueOf(action5) == p.getRole().getRoleAction5()) defaultTasklistSimilarity+=1;
+                //if(defaultTasklistSimilarity < room.getDayProgression())
+                //    return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Error","Default tasklist similarity doesn't match day progression").build();
 
                 if(p.isOrderingReady()) return ResponseEntity.ok(room);
                 orderingReadyCount+=1;
@@ -237,7 +237,7 @@ public class RoomController {
         if(hourEndedCount == room.getPlayerCount()){
             room.setTimeProgression(room.getTimeProgression()+1);
             if(room.getTimeProgression() >= 4){
-                room.setGamestate(Gamestate.ORDERING);
+                room.setGamestate(Gamestate.POSITION);
                 for(Persona p: room.getPlayers()){
                     p.setOrderingReady(false);
                     p.setPositionReady(false);
