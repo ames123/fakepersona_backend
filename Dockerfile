@@ -2,6 +2,8 @@
 FROM maven:3.8.8-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
+# TA LINIJKA NAPRAWIA BŁĄD PERMISJI:
+RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Krok 2: Uruchamianie aplikacji
