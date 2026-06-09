@@ -1,14 +1,14 @@
-# Krok 1: Budowanie pliku JAR na serwerze
-FROM maven:3.8.8-eclipse-temurin-17 AS build
+FROM maven:3.8.8-eclipse-temurin-17
 WORKDIR /app
-COPY . .
-# TA LINIJKA NAPRAWIA BŁĄD PERMISJI:
-RUN chmod +x mvnw
-RUN ./mvnw clean package -DskipTests
 
-# Krok 2: Uruchamianie aplikacji
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /app
-COPY --from=build /app/target/fakepersona-0.1.jar app.jar
+# Kopiujemy kod projektu
+COPY . .
+
+# Budujemy aplikację
+RUN mvn clean package -DskipTests
+
+# Otwieramy port, na którym działa Spring Boot
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Uruchamiamy aplikację bezpośrednio wskazując na wybudowany folder target
+CMD ["java", "-jar", "target/fakepersona-0.1.jar"]
